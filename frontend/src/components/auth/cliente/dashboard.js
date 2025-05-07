@@ -6,12 +6,14 @@ import '../../../styles/dasboard.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  // Usar el userData en un elemento del UI para evitar warning
   const [userData, setUserData] = useState({
     nombre: 'Usuario FAPECAFE',
     rol: 'Cliente'
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [procesoActual, setProcesoActual] = useState({
+  // Eliminar setProcesoActual de la desestructuración si no se usa
+  const [procesoActual] = useState({
     tiempoTranscurrido: "1:36:05",
     tiempoEstimado: "2:30:00",
     fecha: "18-Jun 24",
@@ -21,20 +23,14 @@ const Dashboard = () => {
     fase: 2, // Fase actual (1, 2, 3, o 4)
   });
   
-  const [cafeQuintales, setCafeQuintales] = useState([
+  // Eliminar setCafeQuintales de la desestructuración si no se usa
+  const [cafeQuintales] = useState([
     { tipo: 1, cantidad: 80, fecha: "18-Jun 24" },
     { tipo: 2, cantidad: 180, fecha: "18-Jun 24" },
     { tipo: 3, cantidad: 78, fecha: "18-Jun 24" },
     { tipo: 1, cantidad: 80, fecha: "18-Jun 24" }
   ]);
   
-  const [tiemposContratados, setTiemposContratados] = useState([
-    { tiempo: "2:30:00", color: "#1F77B4", monto: "", titulo: "Tiempo contratado" },
-    { tiempo: "0:10:00", color: "#00A651", monto: "", titulo: "Tiempo consumido" },
-    { tiempo: "10:30:00", color: "#1F77B4", monto: "$ 50.00", titulo: "Tiempo contratado" },
-    { tiempo: "9:30:00", color: "#1F77B4", monto: "$ 250.00", titulo: "Tiempo contratado" }
-  ]);
-
   // Comprobar autenticación al cargar el componente
   useEffect(() => {
     const token = localStorage.getItem('token');

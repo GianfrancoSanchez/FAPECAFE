@@ -36,11 +36,11 @@ function Register() {
 
     try {
       // Aquí puedes configurar la llamada a tu API de backend
-      const response = await axios.post('http://localhost:8000/api/users/register/', {
+      await axios.post('http://localhost:8000/api/users/register/', {
         username: formData.username,
         email: formData.email,
         password: formData.password,
-        password2: formData.confirmPassword, // Añadido campo password2 que requiere el backend
+        password2: formData.confirmPassword, 
         first_name: formData.firstName,
         last_name: formData.lastName
       });
