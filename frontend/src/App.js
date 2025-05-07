@@ -20,27 +20,29 @@ const ProtectedRoute = () => {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        
-        {/* Rutas protegidas que requieren autenticación */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          {/* Aquí puedes añadir más rutas protegidas como:
-          <Route path="/pedidos" element={<Pedidos />} />
-          <Route path="/productos" element={<Productos />} /> 
-          etc. */}
-        </Route>
-        
-        {/* Ruta por defecto: redirige al login */}
-        <Route path="/" element={<Navigate replace to="/login" />} />
-        
-        {/* Ruta para URLs no encontradas */}
-        <Route path="*" element={<Navigate replace to="/login" />} />
-      </Routes>
-    </Router>
+    <div data-testid="app-container">
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          
+          {/* Rutas protegidas que requieren autenticación */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            {/* Aquí puedes añadir más rutas protegidas como:
+            <Route path="/pedidos" element={<Pedidos />} />
+            <Route path="/productos" element={<Productos />} /> 
+            etc. */}
+          </Route>
+          
+          {/* Ruta por defecto: redirige al login */}
+          <Route path="/" element={<Navigate replace to="/login" />} />
+          
+          {/* Ruta para URLs no encontradas */}
+          <Route path="*" element={<Navigate replace to="/login" />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
