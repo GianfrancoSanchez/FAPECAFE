@@ -115,7 +115,7 @@ const Dashboard = () => {
   return (
     <div className="app-container">
       {/* Barra superior */}
-      <Sidebar />
+      <Sidebar userName={userData.nombre} userRole={userData.rol} />
       
       <div className="dashboard-container">
         {/* Barra lateral */}
