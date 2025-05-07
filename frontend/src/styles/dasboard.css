@@ -1,0 +1,923 @@
+/* Estilos para el Dashboard y componentes de navegación */
+
+/* Estilos generales */
+:root {
+  --navbar-height: 60px;
+  --navbar-bg: #ffffff;
+  --navbar-color: #4a3728;
+  --navbar-active: #e5e5e5;
+  --navbar-border: #e0e0e0;
+  --sidenav-width: 220px;
+  --sidenav-bg: #ffffff;
+  --sidenav-color: #555555;
+  --sidenav-active-bg: #f8f0e5;
+  --sidenav-active-color: #8B4513;
+  --sidenav-hover-bg: #f5f5f5;
+  --sidenav-border: #e9e9e9;
+  --sidenav-text-size: 13px;
+  --sidenav-icon-size: 16px;
+  --logout-btn-bg: #ff5722;
+  --logout-btn-color: #ffffff;
+  --transition-speed: 0.3s;
+  --card-border: #e1e1e1;
+  --card-shadow: rgba(0, 0, 0, 0.05);
+  --header-bg: #f8f9fa;
+  --proceso-bg: #FFFBC8;
+  --fase-active: #8B4513;
+  --btn-primary: #00A3E0;
+  --chart-bar: #8B4513;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  padding-top: 0; /* Quitamos el padding-top */
+}
+
+/* Contenedor principal de la aplicación */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Estilos de la Barra de Navegación Superior */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
+  background-color: var(--navbar-bg);
+  color: var(--navbar-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 1001; /* Mayor z-index que el sidebar */
+  border-bottom: 1px solid var(--navbar-border);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4a3728;
+  letter-spacing: 1px;
+}
+
+/* Estilos del menú de navegación */
+.navbar-menu {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.navbar-menu li {
+  position: relative;
+  margin: 0 5px;
+}
+
+.navbar-menu li a {
+  display: block;
+  padding: 0 15px;
+  height: var(--navbar-height);
+  line-height: var(--navbar-height);
+  color: var(--navbar-color);
+  text-decoration: none;
+  transition: background-color var(--transition-speed);
+  white-space: nowrap;
+}
+
+.navbar-menu li a:hover {
+  background-color: var(--navbar-hover);
+}
+
+.navbar-menu li.active a {
+  background-color: var(--navbar-active);
+}
+
+/* Estilos del perfil de usuario en la navbar */
+.navbar-user {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.user-name-display {
+  margin-right: 12px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #4a3728; /* Color marrón para el avatar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-placeholder {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.dropdown-arrow {
+  font-size: 10px;
+}
+
+/* Menú desplegable de usuario */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  z-index: 1000;
+  margin-top: 8px;
+  border: 1px solid var(--navbar-border);
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+}
+
+.dropdown-item a, 
+.dropdown-item button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: var(--navbar-border);
+  margin: 5px 0;
+}
+
+/* Estilos de la Barra de Navegación Lateral */
+.side-nav {
+  position: fixed;
+  top: var(--navbar-height); /* Posicionado debajo de la barra superior */
+  left: 0;
+  width: var(--sidenav-width);
+  height: calc(100vh - var(--navbar-height)); /* Alto ajustado para considerar la barra superior */
+  background-color: var(--sidenav-bg);
+  border-right: 1px solid var(--sidenav-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1000;
+  overflow-y: auto; /* Mantenemos overflow-y: auto por si acaso, pero ajustamos tamaños para evitar scroll */
+  transition: width var(--transition-speed);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.03);
+}
+
+.side-nav-items {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px; /* Reducido desde 15px */
+  padding: 0 6px; /* Reducido desde 10px */
+}
+
+.side-nav-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px; /* Reducido desde 12px 15px */
+  color: var(--sidenav-color);
+  text-decoration: none;
+  transition: all 0.2s;
+  border-radius: 6px; /* Reducido desde 8px */
+  margin-bottom: 2px; /* Reducido desde 5px */
+  font-weight: 400;
+}
+
+.side-nav-item:hover {
+  background-color: var(--sidenav-hover-bg);
+  color: var(--sidenav-active-color);
+  transform: translateX(2px); /* Reducido el efecto de desplazamiento */
+}
+
+.side-nav-item.active {
+  background-color: var(--sidenav-active-bg);
+  color: var(--sidenav-active-color);
+  font-weight: 500;
+  border-left: 2px solid var(--sidenav-active-color); /* Reducido el grosor del borde */
+}
+
+.side-nav-icon {
+  width: 26px; /* Reducido desde 30px */
+  height: 26px; /* Reducido desde 30px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px; /* Reducido desde 12px */
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 6px; /* Reducido desde 8px */
+  transition: all 0.3s;
+}
+
+.side-nav-item:hover .side-nav-icon,
+.side-nav-item.active .side-nav-icon {
+  background-color: rgba(139, 69, 19, 0.1);
+}
+
+.side-nav-icon i {
+  font-size: var(--sidenav-icon-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s;
+}
+
+.side-nav-item:hover .side-nav-icon i {
+  transform: scale(1.1);
+}
+
+.side-nav-text {
+  font-size: var(--sidenav-text-size);
+  transition: color 0.2s;
+}
+
+.side-nav-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--sidenav-border);
+  padding: 8px 10px 10px; /* Reducido desde 15px 20px 20px */
+}
+
+.side-nav-item.logout {
+  background-color: var(--logout-btn-bg);
+  color: var(--logout-btn-color);
+  border-radius: 6px; /* Reducido desde 8px */
+  margin: 5px 0; /* Reducido desde 10px 0 */
+  font-weight: 500;
+  padding: 8px 10px; /* Reducido desde 12px 15px */
+  border: none;
+  box-shadow: 0 1px 3px rgba(255, 87, 34, 0.3); /* Reducida la sombra */
+  transition: all 0.3s;
+}
+
+.side-nav-item.logout:hover {
+  background-color: #e64a19;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(255, 87, 34, 0.4);
+}
+
+.side-nav-item.logout .side-nav-icon {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Estilos para el contenido del dashboard */
+.dashboard-container {
+  display: flex;
+  margin-top: var(--navbar-height); /* Espacio para la barra superior */
+  min-height: calc(100vh - var(--navbar-height));
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 20px;
+  margin-left: var(--sidenav-width); /* Espacio para la barra lateral */
+  background-color: #f5f5f5;
+}
+
+/* Header del Dashboard */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.dashboard-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #4a3728;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 8px;
+  width: 200px;
+}
+
+.search-button {
+  padding: 8px 12px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.date-range {
+  display: flex;
+  align-items: center;
+}
+
+.date-label {
+  margin-right: 15px;
+  color: #555;
+}
+
+.export-button {
+  padding: 8px 15px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Estilos para el contenido principal del dashboard */
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.panel {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Panel de Proceso Actual */
+.proceso-actual {
+  background-color: var(--proceso-bg);
+  padding-bottom: 15px;
+}
+
+.proceso-titulo {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.proceso-content {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 15px;
+  gap: 20px;
+}
+
+.proceso-tiempo {
+  flex: 0 0 120px;
+  text-align: center;
+}
+
+.tiempo-transcurrido {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.tiempo-estimado {
+  font-size: 24px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.tiempo-label {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.proceso-info {
+  flex: 0 0 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.info-icon {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+}
+
+.proceso-fases {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.fase-indicators {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 0 40px;
+}
+
+.fase-indicator {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  background-color: #e0e0e0;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.fase-indicator.active {
+  background-color: var(--fase-active);
+}
+
+.fase-progress-bar {
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 40px;
+}
+
+.fase-progress {
+  height: 100%;
+  background-color: var(--fase-active);
+  border-radius: 4px;
+}
+
+.proceso-qr-codes {
+  flex: 0 0 120px;
+}
+
+.qr-code-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 5px;
+  height: 120px;
+}
+
+.qr-code-item {
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+.qr-code-item.checkerboard {
+  background-image: repeating-conic-gradient(#000 0% 25%, #fff 0% 50%);
+  background-size: 8px 8px;
+}
+
+/* Estilos para el QR code realista */
+.qr-code-item.real-qr {
+  background-color: white;
+  padding: 3px;
+  border: 1px solid #ddd;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qr-pattern {
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(#000 0% 25%, transparent 0% 50%);
+  background-size: 4px 4px;
+  position: relative;
+}
+
+.qr-pattern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 30%;
+  background-color: #000;
+  box-shadow: 
+    calc(70% - 2px) 0 0 0 #000,
+    0 calc(70% - 2px) 0 0 #000;
+}
+
+.qr-pattern::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 30%;
+  border: 2px solid #000;
+  box-sizing: border-box;
+  box-shadow: 
+    calc(70% - 4px) 0 0 0 #000 inset,
+    calc(70% - 4px) 0 0 0 #000,
+    0 calc(70% - 4px) 0 0 #000 inset,
+    0 calc(70% - 4px) 0 0 #000;
+}
+
+.qr-with-logo .qr-pattern {
+  opacity: 0.8;
+}
+
+.qr-logo {
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  background-color: #fff;
+  border-radius: 3px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 2px #000;
+  overflow: hidden;
+}
+
+.qr-logo::after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+  background-color: #664B30;
+  border-radius: 2px;
+}
+
+.proceso-buttons {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-right: 20px;
+}
+
+.btn-finalizar, .btn-avanzar {
+  padding: 10px 20px;
+  background-color: var(--btn-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-finalizar:hover, .btn-avanzar:hover {
+  background-color: #0091c7;
+}
+
+/* Contadores de Quintales de Café */
+.quintales-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.quintales-item {
+  text-align: center;
+  padding: 15px;
+  background-color: #3498db;
+  color: white;
+}
+
+.quintales-fecha {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.quintales-cantidad {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.quintales-tipo {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.quintales-icon {
+  font-size: 16px;
+}
+
+/* Panel de Tiempo Mensual - Actualizado según la imagen de referencia */
+.tiempo-mensual {
+  padding: 15px;
+}
+
+.tiempo-mensual-titulo {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.chart-with-times {
+  display: flex;
+  min-height: 250px;
+}
+
+.chart-area {
+  flex: 1;
+  display: flex;
+  position: relative;
+}
+
+.y-axis {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.y-axis-label {
+  position: absolute;
+  font-size: 12px;
+  color: #666;
+  right: 5px;
+  transform: translateY(50%);
+}
+
+.chart-container {
+  flex: 1;
+  position: relative;
+  margin-left: 40px;
+  height: 220px;
+}
+
+.chart-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.grid-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.bar-chart {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.chart-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  position: relative;
+}
+
+.chart-bar {
+  width: 90%;
+  max-width: 35px;
+  background-color: #8B4513;
+  border-radius: 3px 3px 0 0;
+  position: absolute;
+  bottom: 25px;
+}
+
+.chart-label {
+  position: absolute;
+  bottom: 5px;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Estilos para la sección de tiempos */
+.tiempos-info {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.tiempo-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tiempo-item {
+  flex: 1;
+  text-align: center;
+  padding: 5px;
+}
+
+.tiempo-valor {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.tiempo-monto {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.tiempo-titulo {
+  font-size: 12px;
+  color: #777;
+  margin-top: 5px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .quintales-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-menu {
+    display: none; /* En móvil ocultamos el menú y lo mostramos en un botón hamburguesa */
+  }
+  
+  .navbar-menu.open {
+    display: block;
+    position: absolute;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    background-color: var(--navbar-bg);
+    flex-direction: column;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-menu.open ul {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .navbar-menu.open li {
+    margin: 0;
+    width: 100%;
+  }
+  
+  .navbar-menu.open li a {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .navbar-user .user-name {
+    display: none; /* Ocultamos el nombre en móvil */
+  }
+  
+  .user-name-display {
+    display: none;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .side-nav {
+    width: 65px;
+    padding: 0 5px;
+  }
+  
+  .side-nav-text {
+    display: none;
+  }
+  
+  .side-nav-item {
+    padding: 12px 0;
+    justify-content: center;
+  }
+  
+  .side-nav-icon {
+    margin-right: 0;
+  }
+  
+  .dashboard-content {
+    margin-left: 65px;
+  }
+  
+  .side-nav-item.logout {
+    margin: 10px 0;
+    padding: 12px 0;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .proceso-content {
+    flex-direction: column;
+  }
+  
+  .proceso-fases {
+    margin: 15px 0;
+  }
+  
+  .quintales-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .tiempos-contratados {
+    grid-template-columns: 1fr;
+  }
+  
+  .tiempo-contratado-item.left,
+  .tiempo-contratado-item.right {
+    text-align: center;
+    padding: 10px;
+    border-right: none;
+  }
+}
+
+/* Botón hamburguesa para móvil */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--navbar-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+}
