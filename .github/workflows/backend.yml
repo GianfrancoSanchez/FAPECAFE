@@ -9,6 +9,11 @@ on:
     branches: [ main, master ]
     paths:
       - 'backend/**'
+  schedule:
+    # Ejecuta el workflow todos los lunes a las 8:00 AM UTC
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+    # Permite la ejecución manual desde la interfaz de GitHub
 
 jobs:
   build:
